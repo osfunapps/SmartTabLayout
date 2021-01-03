@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 public class DemoTabWithNotificationMarkActivity extends AppCompatActivity implements
     SmartTabLayout.TabProvider {
@@ -49,7 +50,7 @@ public class DemoTabWithNotificationMarkActivity extends AppCompatActivity imple
     ViewGroup tab = (ViewGroup) findViewById(R.id.tab);
     tab.addView(LayoutInflater.from(this).inflate(demo.layoutResId, tab, false));
 
-    ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+    ViewPager2 viewPager = (ViewPager2) findViewById(R.id.viewpager);
     final SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
     viewPagerTab.setCustomTabView(this);
 
@@ -58,13 +59,13 @@ public class DemoTabWithNotificationMarkActivity extends AppCompatActivity imple
       pages.add(FragmentPagerItem.of(getString(titleResId), DemoFragment.class));
     }
 
-    FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-        getSupportFragmentManager(), pages);
-
+//    FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+//        getSupportFragmentManager(), pages);
+    ViewPagerFragmentAdapter adapter = new ViewPagerFragmentAdapter(this);
     viewPager.setAdapter(adapter);
     viewPagerTab.setViewPager(viewPager);
 
-    viewPagerTab.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+    viewPagerTab.setOnPageChangeListener(new ViewPager2.OnPageChangeCallback() {
       @Override
       public void onPageSelected(int position) {
         super.onPageSelected(position);
@@ -87,7 +88,7 @@ public class DemoTabWithNotificationMarkActivity extends AppCompatActivity imple
   }
 
   @Override
-  public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
+  public View createTabView(ViewGroup container, int position, String title) {
     LayoutInflater inflater = LayoutInflater.from(container.getContext());
     Resources res = container.getContext().getResources();
     View tab = inflater.inflate(R.layout.custom_tab_icon_and_notification_mark, container, false);

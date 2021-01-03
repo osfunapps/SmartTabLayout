@@ -22,15 +22,17 @@ android {
 }
 
 dependencies {
-  implementation "androidx.viewpager:viewpager:${ANDROIDX_BASE_VERSION}"
-  implementation "androidx.fragment:fragment:${ANDROIDX_BASE_VERSION}"
+  implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+//  implementation "androidx.viewpager:viewpager:${ANDROIDX_BASE_VERSION}"
+//  implementation "androidx.fragment:fragment:${ANDROIDX_BASE_VERSION}"
 }
 
 license {
 
   sourceSets {
-    main.java.srcDirs = android.sourceSets.main.java.srcDirs
-    main.resources.srcDirs = android.sourceSets.main.resources.srcDirs
+//    main.java.srcDirs = android.sourceSets.main.java.srcDirs
+//    main.resources.srcDirs = android.sourceSets.main.resources.srcDirs
   }
 
   excludes(["**/*.xml"])

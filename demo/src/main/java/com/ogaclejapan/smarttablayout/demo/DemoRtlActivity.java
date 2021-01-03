@@ -29,31 +29,31 @@ public class DemoRtlActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_rtl);
-
-    Demo demo = getDemo();
-
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    toolbar.setTitle(demo.titleResId);
-    setSupportActionBar(toolbar);
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-    ViewGroup tab = (ViewGroup) findViewById(R.id.tab);
-    tab.addView(LayoutInflater.from(this).inflate(demo.layoutResId, tab, false));
-
-    ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-    final SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
-    demo.setup(viewPagerTab);
-
-    FragmentPagerItems pages = new FragmentPagerItems(this);
-    for (int titleResId : demo.tabs()) {
-      pages.add(FragmentPagerItem.of(getString(titleResId), DemoFragment.class));
-    }
-
-    FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-        getSupportFragmentManager(), pages);
-
-    viewPager.setAdapter(adapter);
-    viewPagerTab.setViewPager(viewPager);
+//
+//    Demo demo = getDemo();
+//
+//    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//    toolbar.setTitle(demo.titleResId);
+//    setSupportActionBar(toolbar);
+//    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//
+//    ViewGroup tab = (ViewGroup) findViewById(R.id.tab);
+//    tab.addView(LayoutInflater.from(this).inflate(demo.layoutResId, tab, false));
+//
+//    ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+//    final SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
+//    demo.setup(viewPagerTab);
+//
+//    FragmentPagerItems pages = new FragmentPagerItems(this);
+//    for (int titleResId : demo.tabs()) {
+//      pages.add(FragmentPagerItem.of(getString(titleResId), DemoFragment.class));
+//    }
+//
+//    FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+//        getSupportFragmentManager(), pages);
+//
+//    viewPager.setAdapter(adapter);
+//    viewPagerTab.setViewPager(viewPager);
 
   }
 

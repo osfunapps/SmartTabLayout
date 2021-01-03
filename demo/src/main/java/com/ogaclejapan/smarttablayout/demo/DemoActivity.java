@@ -11,9 +11,19 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Lifecycle;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 public class DemoActivity extends AppCompatActivity {
 
@@ -40,24 +50,44 @@ public class DemoActivity extends AppCompatActivity {
     ViewGroup tab = (ViewGroup) findViewById(R.id.tab);
     tab.addView(LayoutInflater.from(this).inflate(demo.layoutResId, tab, false));
 
-    ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+    ViewPager2 viewPager = (ViewPager2) findViewById(R.id.viewpager);
     SmartTabLayout viewPagerTab = (SmartTabLayout) findViewById(R.id.viewpagertab);
-    demo.setup(viewPagerTab);
+//    demo.setup(viewPagerTab);
 
-    FragmentPagerItems pages = new FragmentPagerItems(this);
-    for (int titleResId : demo.tabs()) {
-      pages.add(FragmentPagerItem.of(getString(titleResId), DemoFragment.class));
-    }
+//    FragmentPagerItems pages = new FragmentPagerItems(this);
+//    for (int titleResId : demo.tabs()) {
+//      pages.add(FragmentPagerItem.of(getString(titleResId), DemoFragment.class));
+//    }
 
-    FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
-        getSupportFragmentManager(), pages);
+    ViewPagerFragmentAdapter adapter = new ViewPagerFragmentAdapter(this);
 
     viewPager.setAdapter(adapter);
     viewPagerTab.setViewPager(viewPager);
+    ArrayList<String> f = new ArrayList<String>();
+    f.add("fdas");
+    viewPagerTab.populateTabStrip(f);
 
   }
 
   private Demo getDemo() {
     return Demo.valueOf(getIntent().getStringExtra(KEY_DEMO));
+  }
+}
+
+class ViewPagerFragmentAdapter extends FragmentStateAdapter {
+  public ViewPagerFragmentAdapter(@NonNull AppCompatActivity fragmentActivity) {
+    super(fragmentActivity);
+  }
+
+  @NonNull
+  @Override
+  public Fragment createFragment(int position) {
+    return new DemoFragment();
+  }
+
+
+  @Override
+  public int getItemCount() {
+    return 0;
   }
 }

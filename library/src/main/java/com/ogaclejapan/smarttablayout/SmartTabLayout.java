@@ -32,9 +32,14 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 /**
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as
@@ -43,7 +48,7 @@ import androidx.viewpager.widget.ViewPager;
  * <p>
  * To use the component, simply add it to your view hierarchy. Then in your
  * {@link android.app.Activity} or {@link androidx.fragment.app.Fragment} call
- * {@link #setViewPager(ViewPager)} providing it the ViewPager this
+ * {@link #setViewPager(ViewPager2)} providing it the ViewPager this
  * layout
  * is being used for.
  * <p>
@@ -79,8 +84,13 @@ public class SmartTabLayout extends HorizontalScrollView {
   private float tabViewTextSize;
   private int tabViewTextHorizontalPadding;
   private int tabViewTextMinWidth;
-  private ViewPager viewPager;
-  private ViewPager.OnPageChangeListener viewPagerPageChangeListener;
+  private ViewPager2 viewPager;
+  private ViewPager2.OnPageChangeCallback viewPagerPageChangeListener;
+
+//  private ViewPager viewPager;
+//  private ViewPager.OnPageChangeListener viewPagerPageChangeListener;
+//
+
   private OnScrollChangeListener onScrollChangeListener;
   private TabProvider tabProvider;
   private InternalTabClickListener internalTabClickListener;
@@ -226,7 +236,7 @@ public class SmartTabLayout extends HorizontalScrollView {
 
   /**
    * Set the color used for styling the tab text. This will need to be called prior to calling
-   * {@link #setViewPager(ViewPager)} otherwise it will not get set
+   * {@link #setViewPager(ViewPager2)} otherwise it will not get set
    *
    * @param color to use for tab text
    */
@@ -236,7 +246,7 @@ public class SmartTabLayout extends HorizontalScrollView {
 
   /**
    * Sets the colors used for styling the tab text. This will need to be called prior to calling
-   * {@link #setViewPager(ViewPager)} otherwise it will not get set
+   * {@link #setViewPager(ViewPager2)} otherwise it will not get set
    *
    * @param colors ColorStateList to use for tab text
    */
@@ -274,7 +284,7 @@ public class SmartTabLayout extends HorizontalScrollView {
    *
    * @see ViewPager#setOnPageChangeListener(ViewPager.OnPageChangeListener)
    */
-  public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
+  public void setOnPageChangeListener(ViewPager2.OnPageChangeCallback listener) {
     viewPagerPageChangeListener = listener;
   }
 
@@ -319,13 +329,12 @@ public class SmartTabLayout extends HorizontalScrollView {
    * Sets the associated view pager. Note that the assumption here is that the pager content
    * (number of tabs and tab titles) does not change after this call has been made.
    */
-  public void setViewPager(ViewPager viewPager) {
+  public void setViewPager(ViewPager2 viewPager) {
     tabStrip.removeAllViews();
 
     this.viewPager = viewPager;
     if (viewPager != null && viewPager.getAdapter() != null) {
-      viewPager.addOnPageChangeListener(new InternalViewPagerListener());
-      populateTabStrip();
+      viewPager.registerOnPageChangeCallback(new InternalViewPagerListener());
     }
   }
 
@@ -381,14 +390,15 @@ public class SmartTabLayout extends HorizontalScrollView {
     return textView;
   }
 
-  private void populateTabStrip() {
-    final PagerAdapter adapter = viewPager.getAdapter();
+  public void populateTabStrip(List<String> titles) {
+//    final FragmentStateAdapter adapter = viewPager.getAdapter();
 
-    for (int i = 0; i < adapter.getCount(); i++) {
+    for (int i = 0; i < titles.size(); i++) {
 
+      String title = titles.get(i);
       final View tabView = (tabProvider == null)
-          ? createDefaultTabView(adapter.getPageTitle(i))
-          : tabProvider.createTabView(tabStrip, i, adapter);
+          ? createDefaultTabView(title)
+          : tabProvider.createTabView(tabStrip, i, title);
 
       if (tabView == null) {
         throw new IllegalStateException("tabView is null.");
@@ -546,7 +556,7 @@ public class SmartTabLayout extends HorizontalScrollView {
     /**
      * @return Return the View of {@code position} for the Tabs
      */
-    View createTabView(ViewGroup container, int position, PagerAdapter adapter);
+    View createTabView(ViewGroup container, int position, String title);
 
   }
 
@@ -563,7 +573,7 @@ public class SmartTabLayout extends HorizontalScrollView {
     }
 
     @Override
-    public View createTabView(ViewGroup container, int position, PagerAdapter adapter) {
+    public View createTabView(ViewGroup container, int position, String title) {
       View tabView = null;
       TextView tabTitleView = null;
 
@@ -580,7 +590,7 @@ public class SmartTabLayout extends HorizontalScrollView {
       }
 
       if (tabTitleView != null) {
-        tabTitleView.setText(adapter.getPageTitle(position));
+        tabTitleView.setText(title);
       }
 
       return tabView;
@@ -588,7 +598,7 @@ public class SmartTabLayout extends HorizontalScrollView {
 
   }
 
-  private class InternalViewPagerListener implements ViewPager.OnPageChangeListener {
+  private class InternalViewPagerListener extends ViewPager2.OnPageChangeCallback {
 
     private int scrollState;
 

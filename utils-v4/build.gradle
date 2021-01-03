@@ -27,8 +27,8 @@ dependencies {
 license {
 
   sourceSets {
-    main.java.srcDirs = android.sourceSets.main.java.srcDirs
-    main.resources.srcDirs = android.sourceSets.main.resources.srcDirs
+//    main.java.srcDirs = android.sourceSets.main.java.srcDirs
+//    main.resources.srcDirs = android.sourceSets.main.resources.srcDirs
   }
 
   ext.year = Calendar.getInstance().get(Calendar.YEAR)
