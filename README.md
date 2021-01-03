@@ -1,7 +1,13 @@
+ 
+# Updates
+Added support for ViewPager2. Just build the library and copy the .aar file
+
 # SmartTabLayout
 [![Maven Central][maven_central_badge_svg]][maven_central_badge_app] [![Android Arsenal][android_arsenal_badge_svg]][android_arsenal_badge_link] [![Android Weekly][android_weekly_badge_svg]][android_weekly_badge_link]
 
 ![icon][demo_icon]
+
+
 
 A custom ViewPager title strip which gives continuous feedback to the user when scrolling.
 
