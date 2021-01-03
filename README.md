@@ -1,6 +1,13 @@
  
 # Updates
-Added support for ViewPager2. Just build the library and copy the .aar file
+Added support for ViewPager2. Just build the library and copy the .aar file.
+
+In order to populate the tabs, call populateTabStrip():
+```
+ArrayList<String> tabs = new ArrayList<String>();
+tabs.add("tab1", "tab2");
+viewPagerTab.populateTabStrip(tabs);
+```
 
 # SmartTabLayout
 [![Maven Central][maven_central_badge_svg]][maven_central_badge_app] [![Android Arsenal][android_arsenal_badge_svg]][android_arsenal_badge_link] [![Android Weekly][android_weekly_badge_svg]][android_weekly_badge_link]

@@ -64,7 +64,7 @@ public class DemoActivity extends AppCompatActivity {
     viewPager.setAdapter(adapter);
     viewPagerTab.setViewPager(viewPager);
     ArrayList<String> f = new ArrayList<String>();
-    f.add("fdas");
+    f.add("tab1", "tab2");
     viewPagerTab.populateTabStrip(f);
 
   }
